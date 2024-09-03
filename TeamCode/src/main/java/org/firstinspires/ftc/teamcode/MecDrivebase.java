@@ -136,6 +136,11 @@ public class MecDrivebase {
     public Pose2D getPose(){
         return localization.currentPosition;
     }
+    public String getPoseString(){
+        return localization.currentPosition.x + ", " +
+                localization.currentPosition.y + ", " +
+                localization.currentPosition.h;
+    }
 
     public void update(){
         localization.update();
