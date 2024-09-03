@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import Wheelie.PathFollower;
 import Wheelie.Pose2D;
 
 public class LocalizationTest extends LinearOpMode{
@@ -13,7 +14,6 @@ public class LocalizationTest extends LinearOpMode{
 
         while (opModeIsActive()){
             drive.update();
-
             telemetry.addLine(drive.getPoseString());
         }
     }
