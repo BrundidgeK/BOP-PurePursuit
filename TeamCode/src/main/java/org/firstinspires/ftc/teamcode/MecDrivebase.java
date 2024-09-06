@@ -11,10 +11,10 @@ import Wheelie.Pose2D;
 public class MecDrivebase {
     private DcMotorEx[] motors = new DcMotorEx[4];
     private static final String[] MOTOR_NAMES = {
-            "frontLeftDriveMotor",
-            "backLeftDriveMotor",
-            "frontRightDriveMotor",
-            "backRightDriveMotor"
+            "FL",
+            "BL",
+            "BR",
+            "FR"
     };
     private DcMotorSimple.Direction[] directions = {
             DcMotorSimple.Direction.REVERSE,
@@ -23,16 +23,15 @@ public class MecDrivebase {
             DcMotorSimple.Direction.FORWARD
     };
 
-    public final static double TICKS_PER_CENTI = (5281.1 / (9 * Math.PI));
-
     private Localization localization;
-    private PID pid = new PID(.15, 0, .5); //TODO re-evaluate these values
+    private PID pid = new PID(0,0,0);//(.15, 0, .5); //TODO re-evaluate these values
 
     //The max speed of the motors
-    public static final double SPEED_PERCENT = 1;
+    public static final double SPEED_PERCENT = .5;
 
     public MecDrivebase(HardwareMap hw, Pose2D startPose)
     {
+        localization = new Localization(hw, startPose);
         for (int i = 0; i < motors.length; i++) {
             motors[i] = hw.get(DcMotorEx.class, MOTOR_NAMES[i]);
             motors[i].setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
@@ -41,7 +40,6 @@ public class MecDrivebase {
             motors[i].setDirection(directions[i]);
         }
 
-        localization = new Localization(hw, startPose);
     }
 
     /** Sets all motors to the same power */

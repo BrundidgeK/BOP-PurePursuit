@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -32,8 +33,8 @@ public class Localization {
     public Pose2D currentPosition;
 
     public Localization(HardwareMap hw, Pose2D start){
-        hori = hw.get(DcMotorEx.class, "suspend");
-        vert = hw.get(DcMotorEx.class, "Intake");
+        hori = hw.get(DcMotorEx.class, "FR");
+        vert = hw.get(DcMotorEx.class, "BR");
         hori.setDirection(DcMotorSimple.Direction.REVERSE);
         vert.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -45,6 +46,9 @@ public class Localization {
 
         imu = hw.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
+
+        hori.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        vert.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         currentPosition = new Pose2D(start.x, start.y, start.h);
     }
@@ -88,6 +92,7 @@ public class Localization {
     }
 
     public void update(){
+
         calculateChanges();
     }
 }
