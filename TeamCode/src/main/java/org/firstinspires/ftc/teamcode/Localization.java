@@ -41,7 +41,7 @@ public class Localization {
         hori = hw.get(DcMotorEx.class, "FR");
         vert = hw.get(DcMotorEx.class, "BR");
         hori.setDirection(DcMotorSimple.Direction.REVERSE); //TODO Check if needs to be reversed
-        vert.setDirection(DcMotorSimple.Direction.REVERSE);
+        vert.setDirection(DcMotorSimple.Direction.FORWARD);
         hori.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         vert.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 

@@ -28,7 +28,7 @@ public class MecDrivebase {
     private PID pid = new PID(.15, 0, .5); //TODO re-evaluate these values
 
     //The max speed of the motors
-    public static final double SPEED_PERCENT = .5;
+    public static final double SPEED_PERCENT = 1;
 
     public MecDrivebase(HardwareMap hw, Pose2D startPose)
     {
@@ -59,18 +59,20 @@ public class MecDrivebase {
     }
 
     /** Sets motor powers so drivebase can move towards target based on input (usually from the PathFollower class)*/
-    public void moveTo(double forward, double strafe, double heading){
+    public void  moveTo(double forward, double strafe, double heading){
         double movementAngle = Math.atan2(strafe, forward) - localization.getAngle();
         double x = Math.cos(movementAngle) * forward;
         double y = Math.sin(movementAngle) * strafe;
 
-        double length = x + y + heading;
+       /* double length = x + y + heading;
 
         if(length > 1){
             x /= length;
             y /= length;
             heading /= length;
         }
+
+        */
 
         moveWithPower(
                 x + y + heading,

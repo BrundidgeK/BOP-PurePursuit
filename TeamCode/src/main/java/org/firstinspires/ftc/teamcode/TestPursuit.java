@@ -31,12 +31,17 @@ public class TestPursuit extends LinearOpMode {
 
         waitForStart();
 
-        while (!concludePath(path.getPt(-1))){
+        while (!concludePath(path.getPt(points.length-2)) && opModeIsActive()){
             drive.update();
 
             Pose2D move = follower.followPath(drive.getPose());
             if (!follower.isShrinkingLook()){
+                telemetry.addLine("moving normally");
+                telemetry.addLine(drive.getPowers());
                 drive.moveTo(move);
+                telemetry.addLine(""+move.x);
+                telemetry.addLine(""+move.y);
+                telemetry.addLine(""+move.h);
             } else {
                 telemetry.addLine("Using PID");
                 if(time == 0)
