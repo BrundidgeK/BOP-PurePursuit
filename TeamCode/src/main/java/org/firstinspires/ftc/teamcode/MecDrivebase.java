@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -24,7 +25,7 @@ public class MecDrivebase {
     };
 
     private Localization localization;
-    private PID pid = new PID(0,0,0);//(.15, 0, .5); //TODO re-evaluate these values
+    private PID pid = new PID(.15, 0, .5); //TODO re-evaluate these values
 
     //The max speed of the motors
     public static final double SPEED_PERCENT = .5;
@@ -32,14 +33,14 @@ public class MecDrivebase {
     public MecDrivebase(HardwareMap hw, Pose2D startPose)
     {
         localization = new Localization(hw, startPose);
+
         for (int i = 0; i < motors.length; i++) {
             motors[i] = hw.get(DcMotorEx.class, MOTOR_NAMES[i]);
             motors[i].setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-            motors[i].setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+            motors[i].setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
             motors[i].setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
             motors[i].setDirection(directions[i]);
         }
-
     }
 
     /** Sets all motors to the same power */
@@ -98,7 +99,7 @@ public class MecDrivebase {
 
         x *= pid.pidCalc(target.x, getPose().x, startTime);
         y *= pid.pidCalc(target.y, getPose().y, startTime);
-        double heading = Range.clip(pid.pidCalc(target.h, getPose().h, startTime), -1, 1);
+        double heading = pid.pidCalc(target.h, getPose().h, startTime);
 
         double length = x + y + heading;
 
@@ -138,6 +139,13 @@ public class MecDrivebase {
         return localization.currentPosition.x + ", " +
                 localization.currentPosition.y + ", " +
                 localization.currentPosition.h;
+    }
+
+    public int getHoriOdom(){
+        return localization.getHori();
+    }
+    public int getVertOdom(){
+        return localization.getVert();
     }
 
     public void update(){

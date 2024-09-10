@@ -14,7 +14,7 @@ public class TestPursuit extends LinearOpMode {
     private MecDrivebase drive;
     private PathFollower follower;
 
-    private Pose2D[] points = new Pose2D[] { //TODO changes these
+    private Pose2D[] points = new Pose2D[] {
             new Pose2D(24, 0,0),
             new Pose2D(24, 24, Math.toRadians(90)),
     };
@@ -41,7 +41,7 @@ public class TestPursuit extends LinearOpMode {
                 telemetry.addLine("Using PID");
                 if(time == 0)
                     time = System.currentTimeMillis();
-                drive.moveToPID(move, path.getPt(-1), time);
+                drive.moveToPID(move, path.getPt(points.length-1), time);
             }
 
             telemetry.addLine("Waypoint #" + (follower.getWayPoint() + 1));
