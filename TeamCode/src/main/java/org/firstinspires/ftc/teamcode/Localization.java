@@ -40,8 +40,6 @@ public class Localization {
         //Setting up Odom pods
         hori = hw.get(DcMotorEx.class, "FR");
         vert = hw.get(DcMotorEx.class, "BR");
-        hori.setDirection(DcMotorSimple.Direction.REVERSE); //TODO Check if needs to be reversed
-        vert.setDirection(DcMotorSimple.Direction.FORWARD);
         hori.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         vert.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -62,7 +60,7 @@ public class Localization {
     private void calculateChanges() {
         //Finds the delta values in wheels and angle
         int currentH = hori.getCurrentPosition();
-        int currentV = vert.getCurrentPosition();
+        int currentV = -vert.getCurrentPosition();
         int dy = currentH - prevH;
         int dx = currentV - prevV;
         double heading = getAngle();

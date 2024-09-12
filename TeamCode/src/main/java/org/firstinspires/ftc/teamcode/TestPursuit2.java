@@ -3,25 +3,22 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import java.util.Timer;
-
 import Wheelie.Path;
 import Wheelie.PathFollower;
 import Wheelie.Pose2D;
 
 @Autonomous
-public class TestPursuit extends LinearOpMode {
+public class TestPursuit2 extends LinearOpMode {
     private MecDrivebase drive;
-    private PathFollower follower;
+    private PathFollow follower;
 
     private Pose2D[] points = new Pose2D[] {
             new Pose2D(0, 0,0),
-            new Pose2D(12, 0, 0),
-            new Pose2D(18, 0, 0),
+            new Pose2D(12, 12, 0),
+            new Pose2D(18, 18, 0),
             new Pose2D(24, 0, 0),
-            new Pose2D(18, 0, 0),
-            new Pose2D(12, 0, 0),
-            new Pose2D(0, 0,0),
+            new Pose2D(24, 12, 0),
+            new Pose2D(24, 24, 0),
     };
 
     @Override
@@ -29,7 +26,7 @@ public class TestPursuit extends LinearOpMode {
         Pose2D start = new Pose2D(0,0,0);
         Path path = new Path(start, points);
 
-        follower = new PathFollower(start, 3, path);
+        follower = new PathFollow(start, 3, path);
 
         drive = new MecDrivebase(hardwareMap, start);
         double time = 0;
